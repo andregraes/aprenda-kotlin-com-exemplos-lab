@@ -1,21 +1,52 @@
-// [Template no Kotlin Playground](https://pl.kotl.in/WcteahpyN)
-
 enum class Nivel { BASICO, INTERMEDIARIO, DIFICIL }
 
-class Usuario
+class Usuario(val nome: String)
 
-data class ConteudoEducacional(var nome: String, val duracao: Int = 60)
+data class ConteudoEducacional(val nome: String, val duracao: Int = 60)
 
-data class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>) {
+class Formacao(val nome: String, var nivel: Nivel, var conteudos: MutableList<ConteudoEducacional> = mutableListOf()) {
 
     val inscritos = mutableListOf<Usuario>()
-    
+
     fun matricular(usuario: Usuario) {
-        TODO("Utilize o parâmetro $usuario para simular uma matrícula (usar a lista de $inscritos).")
+        inscritos.add(usuario)
+        println("Usuário ${usuario.nome} matriculado na formação $nome.")
+    }
+
+    fun adicionarConteudo(conteudo: ConteudoEducacional) {
+        conteudos.add(conteudo)
+        println("Conteúdo ${conteudo.nome} adicionado à formação $nome.")
+    }
+
+    fun removerConteudo(conteudo: ConteudoEducacional) {
+        conteudos.remove(conteudo)
+        println("Conteúdo ${conteudo.nome} removido da formação $nome.")
     }
 }
 
 fun main() {
-    TODO("Analise as classes modeladas para este domínio de aplicação e pense em formas de evoluí-las.")
-    TODO("Simule alguns cenários de teste. Para isso, crie alguns objetos usando as classes em questão.")
+    // Criando alguns usuários
+    val usuario1 = Usuario("João")
+    val usuario2 = Usuario("Maria")
+
+    // Criando alguns conteúdos educacionais
+    val conteudo1 = ConteudoEducacional("Introdução à Programação", 90)
+    val conteudo2 = ConteudoEducacional("Estruturas de Dados", 120)
+    val conteudo3 = ConteudoEducacional("Algoritmos Avançados")
+
+    // Criando uma formação
+    val formacao = Formacao("Formação em Ciência da Computação", Nivel.INTERMEDIARIO)
+
+    // Adicionando conteúdos à formação
+    formacao.adicionarConteudo(conteudo1)
+    formacao.adicionarConteudo(conteudo2)
+    formacao.adicionarConteudo(conteudo3)
+
+    // Matriculando usuários na formação
+    formacao.matricular(usuario1)
+    formacao.matricular(usuario2)
+
+    // Removendo conteúdo da formação
+    formacao.removerConteudo(conteudo3)
 }
+
